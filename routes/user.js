@@ -16,7 +16,9 @@ userRouter.get("/", [authJWT.verifyToken, authJWT.isAdmin], userController.getAl
 
 userRouter.post("/login", verifySignIn.checkEmailFPT, userController.login);
 
-userRouter.get("/activate", userController.activateAccount)
+userRouter.get("/activate", userController.activateAccount);
+
+userRouter.get("/:id", userController.getUserById)
 
 
 export default userRouter;

@@ -59,9 +59,23 @@ const activateAccount = async (req, res) => {
 	}
 }
 
+const getUserById = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const user = await userRepository.getUserById(id);
+		return res.status(200).json({
+			message: "Get user successfully",
+			data: user
+		})
+	} catch (error) {
+		return res.status(500).json({ error: error });
+	}
+}
+
 export default {
 	register,
 	getAllUser,
 	login,
-	activateAccount
+	activateAccount,
+	getUserById
 }

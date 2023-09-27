@@ -57,10 +57,7 @@ const login = async ({ email, password }) => {
 		const passwordIsValid = bcrypt.compareSync(password, loginUser.password);
 
 		if (!passwordIsValid) {
-			return {
-				accessToken: null,
-				message: "Invalid password"
-			};
+			throw new Error('Password invalid');
 		}
 		const jwtSecret = process.env.SECRET_KEY_JWT;
 		const token = jwt.sign({ id: loginUser._id, name: loginUser.name, email: loginUser.email, isActive: loginUser.isActive }, jwtSecret, {
@@ -98,11 +95,20 @@ const activateAccount = async (email, activationCode) => {
 	}
 }
 
+const getUserById = async (id) => {
+	const user = await User.findById(id).select("-password");
+	if (!user) {
+		throw new Error("User is not existed");
+	}
+	return user;
+}
+
 // Actions wirk DB: ...
 
 export default {
 	register,
 	getAllUsers,
 	login,
-	activateAccount
+	activateAccount,
+	getUserById
 };

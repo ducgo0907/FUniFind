@@ -19,10 +19,6 @@ commentRouter.put(
 	commentController.edit
 );
 
-commentRouter.get('/all', [authJWT.verifyToken],
-	commentController.getAllComment
-);
-
 commentRouter.delete('/delete', [authJWT.verifyToken],
 	commentController.deleteComment
 );

@@ -35,10 +35,19 @@ app.use(router);
 
 socketIO.on('connection', (socket) => {
 	console.log("User connected: ", socket.id);
-	socket.emit("testSocket", "adsadas");
+
+	socket.on('sendComment', data => {
+		socketIO.emit('getComment', { data });
+	})
+
+	socket.on('deleteComment', ({ commentId, postId }) => {
+		console.log(commentId, postId);
+		socketIO.emit('deletedComment', { commentId, postId });
+	})
+
 	socket.on('disconnect', () => {
 		console.log('User disconnect: ', socket.id);
-	})
+	});
 })
 
 const port = process.env.PORT || 8080;

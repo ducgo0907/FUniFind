@@ -41,11 +41,14 @@ const edit = async (req, res) => {
 }
 
 const deleteComment = async (req, res) => {
-	const { postID } = req.body;
+	const { commentID } = req.query;
 	const userID = req.userID;
 	try {
-		// await postRepository.deletePost({ postID, userID });
-		return res.status(201).json({ message: 'Delete post successfully.' });
+		const commentDelete = await commentRepository.deleteComment({ commentID, userID });
+		return res.status(201).json({
+			message: 'Delete post successfully.',
+			data: commentDelete
+		});
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
