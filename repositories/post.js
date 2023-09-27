@@ -36,7 +36,15 @@ const getAllPosts = async () => {
 		.populate({
 			path: 'comments',
 			populate: {
-				path: 'user'
+				path: 'user',
+				select: 'name _id'
+			}
+		})
+		.populate({
+			path: 'interactions',
+			populate: {
+				path: 'user',
+				select: 'name _id'
 			}
 		})
 		.exec();

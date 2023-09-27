@@ -21,6 +21,12 @@ const Post = mongoose.model("Post", new Schema(
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Comment',
 			}
+		],
+		interactions: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Interaction',
+			}
 		]
 	},
 	{

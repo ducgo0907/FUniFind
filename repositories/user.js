@@ -65,7 +65,7 @@ const login = async ({ email, password }) => {
 			expiresIn: 86400
 		});
 		return {
-			id: loginUser.id,
+			id: loginUser._id,
 			name: loginUser.name,
 			email: loginUser.email,
 			isAdmin: loginUser.isAdmin,
