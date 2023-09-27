@@ -68,6 +68,7 @@ const login = async ({ email, password }) => {
 			id: loginUser.id,
 			name: loginUser.name,
 			email: loginUser.email,
+			isAdmin: loginUser.isAdmin,
 			accessToken: token
 		}
 	} catch (error) {

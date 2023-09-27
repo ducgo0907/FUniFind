@@ -7,6 +7,11 @@ const Post = mongoose.model("Post", new Schema(
 			type: String,
 			require: true
 		},
+		status: {
+			type: String,
+			enum: ['PENDING', 'APPROVED', "REJECTED"],
+			default: 'PENDING'
+		},
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'

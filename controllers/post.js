@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator"
 import { postRepository } from "../repositories/index.js";
+import post from "../repositories/post.js";
 
 const create = async (req, res) => {
 	const error = validationResult(req);
@@ -61,9 +62,37 @@ const getAllPosts = async (req, res) => {
 
 }
 
+const approve = async (req, res) => {
+	const { postID, isApprove } = req.body;
+	try {
+		const postAction = await postRepository.approve({ postID, isApprove });
+		return res.status(200).json({
+			message: 'Action successfully!',
+			data: postAction
+		})
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+
+}
+
+const getListPending = async (req, res) => {
+	try {
+		const listPostPending = await postRepository.getListPending();
+		return res.status(200).json({
+			message: 'Get data successfully',
+			data: listPostPending
+		})
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() })
+	}
+}
+
 export default {
 	create,
 	edit,
 	getAllPosts,
-	deletePost
+	deletePost,
+	approve,
+	getListPending
 }
