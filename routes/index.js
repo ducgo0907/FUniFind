@@ -4,6 +4,7 @@ import commentRouter from "./comment.js";
 import express from "express";
 import messageRouter from "./message.js";
 import interactionRouter from "./interaction.js";
+import reportRouter from "./Report.js";
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use("/posts", postRouter);
 router.use("/comments", commentRouter);
 router.use("/messages", messageRouter);
 router.use("/interactions", interactionRouter);
+router.use("/reports", reportRouter);
 
 export default router;
