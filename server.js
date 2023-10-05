@@ -33,16 +33,30 @@ app.get('/', (req, res) => {
 
 app.use(router);
 
+const connectedUsers = {};
+
 socketIO.on('connection', (socket) => {
 	console.log("User connected: ", socket.id);
+
+	socket.on('storeUserId', (userId) => {
+		connectedUsers[userId] = socket.id;
+	})
 
 	socket.on('sendComment', data => {
 		socketIO.emit('getComment', { data });
 	})
 
 	socket.on('deleteComment', ({ commentId, postId }) => {
-		console.log(commentId, postId);
 		socketIO.emit('deletedComment', { commentId, postId });
+	})
+
+	socket.on('privateMessage', ({ sender, receiver, message, userName }) => {
+		let receiverSocketId = connectedUsers[receiver];
+		console.log(connectedUsers);
+		if (receiverSocketId) {
+			console.log(receiver);
+			socketIO.to(receiverSocketId).emit('privateMessage', { sender, message, userName });
+		}
 	})
 
 	socket.on('disconnect', () => {
