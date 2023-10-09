@@ -27,6 +27,12 @@ const Post = mongoose.model("Post", new Schema(
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Interaction',
 			}
+		],
+		images: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Image',
+			}
 		]
 	},
 	{

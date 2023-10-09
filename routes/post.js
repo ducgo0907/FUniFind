@@ -25,6 +25,8 @@ postRouter.delete('/delete', [authJWT.verifyToken], postController.deletePost);
 
 postRouter.post('/approve', [authJWT.verifyToken, authJWT.isAdmin], postController.approve);
 
-postRouter.get('/listApprove', [authJWT.verifyToken, authJWT.isAdmin], postController.getListPending)
+postRouter.get('/listApprove', [authJWT.verifyToken, authJWT.isAdmin], postController.getListPending);
+
+postRouter.post("/upload", postController.upload);
 
 export default postRouter;

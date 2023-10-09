@@ -5,6 +5,7 @@ import router from './routes/index.js';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors'
+import { v2 as cloudinary } from 'cloudinary';
 
 const app = express();
 app.use(express.json());
@@ -37,7 +38,6 @@ const connectedUsers = {};
 
 socketIO.on('connection', (socket) => {
 	console.log("User connected: ", socket.id);
-
 	socket.on('storeUserId', (userId) => {
 		connectedUsers[userId] = socket.id;
 	})
@@ -52,9 +52,7 @@ socketIO.on('connection', (socket) => {
 
 	socket.on('privateMessage', ({ sender, receiver, message, userName }) => {
 		let receiverSocketId = connectedUsers[receiver];
-		console.log(connectedUsers);
 		if (receiverSocketId) {
-			console.log(receiver);
 			socketIO.to(receiverSocketId).emit('privateMessage', { sender, message, userName });
 		}
 	})
@@ -65,6 +63,16 @@ socketIO.on('connection', (socket) => {
 })
 
 const port = process.env.PORT || 8080;
+
+
+//Setting cloudinary for upload image
+cloudinary.config({
+	cloud_name: process.env.CLOUD_NAME,
+	api_key: process.env.API_KEY,
+	api_secret: process.env.API_SECRET,
+	secure: true,
+});
+
 // Listen at port
 server.listen(port, async () => {
 	await connectDB();

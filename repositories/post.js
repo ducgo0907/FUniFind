@@ -47,6 +47,10 @@ const getAllPosts = async () => {
 				select: 'name _id'
 			}
 		})
+		.populate({
+			path: 'images',
+			select: 'url post'
+		})
 		.exec();
 	if (listAllPost == null) {
 		throw new Error("Don't have any post");
