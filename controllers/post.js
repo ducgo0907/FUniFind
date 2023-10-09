@@ -16,7 +16,7 @@ const create = async (req, res) => {
 	const userID = req.userID;
 	try {
 		// Call action cua Repository (DAO)
-		const newPost = await postRepository.create({ content, userID });
+		const newPost = await postRepository.create({ content, userID })
 		return res.status(201).json({
 			message: 'Create post successfully',
 			data: newPost

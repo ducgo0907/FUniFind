@@ -17,12 +17,14 @@ const upload = async (req, res) => {
 		for (let i = 0; i < filesData.length; i++) {
 			const imagePath = filesData[i];
 			try {
-				const result = await cloudinary.uploader.upload(imagePath, options);
-				urls.push(result.secure_url);
-				// Tao moi anh
-				imageRepository.create({ url: result.secure_url, postID: postId })
-				if (i === filesData.length - 1 && !!result.secure_url) {
-					return res.status(200).json({ data: urls });
+				if(imagePath !== undefined){
+					const result = await cloudinary.uploader.upload(imagePath, options);
+					urls.push(result.secure_url);
+					// Tao moi anh
+					await imageRepository.create({ url: result.secure_url, postID: postId })
+					if (i === filesData.length - 1 && !!result.secure_url) {
+						return res.status(200).json({ data: urls });
+					}
 				}
 			} catch (error) {
 				console.error(error);
