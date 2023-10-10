@@ -30,32 +30,36 @@ const edit = async ({ content, postID, userID }) => {
 };
 
 const getAllPosts = async () => {
-  // lay tat ca post
-  const listAllPost = await Post.find({ status: "APPROVED" })
-    .populate({
-      path: "user",
-      select: "name",
-    })
-    .populate({
-      path: "comments",
-      populate: {
-        path: "user",
-        select: "name _id",
-      },
-    })
-    .populate({
-      path: "interactions",
-      populate: {
-        path: "user",
-        select: "name _id",
-      },
-    })
-    .exec();
-  if (listAllPost == null) {
-    throw new Error("Don't have any post");
-  }
-  return listAllPost;
-};
+	// lay tat ca post
+	const listAllPost = await Post.find({ status: "APPROVED" })
+		.populate({
+			path: 'user',
+			select: 'name'
+		})
+		.populate({
+			path: 'comments',
+			populate: {
+				path: 'user',
+				select: 'name _id'
+			}
+		})
+		.populate({
+			path: 'interactions',
+			populate: {
+				path: 'user',
+				select: 'name _id'
+			}
+		})
+		.populate({
+			path: 'images',
+			select: 'url post'
+		})
+		.exec();
+	if (listAllPost == null) {
+		throw new Error("Don't have any post");
+	}
+	return listAllPost;
+}
 
 const deletePost = async ({ postID, userID }) => {
   try {

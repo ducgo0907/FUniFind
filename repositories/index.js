@@ -1,8 +1,9 @@
 import userRepository from './user.js';
 import postRepository from './post.js';
-import commentRepository from './comment.js'
-import messageRepository from './message.js'
-import interactionRepostiroy from './interaction.js'
+import commentRepository from './comment.js';
+import messageRepository from './message.js';
+import imageRepository from './image.js';
+import interactionRepostiroy from './interaction.js';
 
 
 export {
@@ -10,5 +11,6 @@ export {
 	postRepository,
 	commentRepository,
 	messageRepository,
-	interactionRepostiroy
+	interactionRepostiroy,
+	imageRepository
 }

@@ -39,6 +39,8 @@ postRouter.get(
   postController.getListPending
 );
 
+postRouter.post("/upload", postController.upload);
+
 postRouter.get(
   "/:id",
   [authJWT.verifyToken, authJWT.isAdmin],
