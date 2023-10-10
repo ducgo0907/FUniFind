@@ -130,6 +130,9 @@ const getPostDetail = async (postID) => {
           select: "_id name",
         },
       })
+	  .populate({
+		path: "images"
+	  })
       .exec();
   } catch (error) {
     throw new Error(error);
