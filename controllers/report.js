@@ -15,11 +15,25 @@ const all = async (req, res) => {
 
 }
 
-const report = async (req, res) => {
-	const { postId, commentId, userId, description } = req.body;
+const reportPost = async (req, res) => {
+	const { postId, description } = req.body;
+	const userId = req.userID;
 	try {
-		const newReport = await reportRepository.report({postId, commentId, userId, description});
-		return res.status(200).json({ message: 'Get data successfully', data: newReport })
+		const newReport = await reportRepository.reportPost({postId, userId, description});
+		return res.status(200).json({ message: 'Post Reported', data: newReport })
+	} catch (error) {
+		return res.status(500).json({
+			message: error.toString()
+		})
+	}
+}
+
+const reportComment = async (req, res) => {
+	const { commentId, description } = req.body;
+	const userId = req.userID;
+	try {
+		const newReport = await reportRepository.reportComment({commentId, userId, description});
+		return res.status(200).json({ message: 'Comment Reported', data: newReport })
 	} catch (error) {
 		return res.status(500).json({
 			message: error.toString()
@@ -29,5 +43,6 @@ const report = async (req, res) => {
 
 export default {
 	all,
-	report
+	reportPost,
+	reportComment
 }

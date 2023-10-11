@@ -5,6 +5,7 @@ import messageRepository from './message.js';
 import imageRepository from './image.js';
 import interactionRepostiroy from './interaction.js';
 import reportRepository from './report.js'
+import followRepository from './follow.js'
 
 
 export {
@@ -14,5 +15,6 @@ export {
 	messageRepository,
 	interactionRepostiroy,
 	imageRepository,
-	reportRepository
+	reportRepository,
+	followRepository
 }

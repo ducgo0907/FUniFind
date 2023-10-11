@@ -5,6 +5,7 @@ import messageController from './message.js'
 import interactionController from './interaction.js';
 import imageController from './image.js';
 import reportController from './report.js';
+import followController from './follow.js'
 
 
 export {
@@ -14,5 +15,6 @@ export {
 	messageController,
 	interactionController,
 	imageController,
-	reportController
+	reportController,
+	followController
 }

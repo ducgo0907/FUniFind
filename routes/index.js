@@ -4,8 +4,10 @@ import commentRouter from "./comment.js";
 import express from "express";
 import messageRouter from "./message.js";
 import interactionRouter from "./interaction.js";
-import reportRouter from "./Report.js";
+import reportRouter from "./report.js";
 import imageRouter from "./image.js";
+import followRouter from "./follow.js";
+
 
 const router = express.Router();
 
@@ -16,5 +18,6 @@ router.use("/messages", messageRouter);
 router.use("/interactions", interactionRouter);
 router.use("/reports", reportRouter);
 router.use("/images", imageRouter);
+router.use("/follows", followRouter)
 
 export default router;

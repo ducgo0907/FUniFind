@@ -18,7 +18,12 @@ const Report = mongoose.model("Report", new Schema(
 		comment: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Comment'
-		}
+		},
+		type: {
+			type: String,
+			enum: ["POST", "COMMENT"],
+			require: true
+		},
 	},
 	{
 		timestamps: true

@@ -139,12 +139,17 @@ const getPostDetail = async (postID) => {
 	}
 };
 
-const getListPost = async (startIndex, size) => {
-	const listPost = await Post.find().skip(startIndex).limit(size);
+const getListPost = async (startIndex, size, query) => {
+	const listPost = await Post.find(query).skip(startIndex).limit(size);
+	const totalPost = await Post.countDocuments(query);
+	
 	if (!listPost || listPost.length <= 0) {
 		throw new Error("Don't have any post!");
 	}
-	return listPost;
+	return {
+		data: listPost,
+		totalPost
+	};
 }
 
 export default {

@@ -3,11 +3,13 @@ import mongoose, { ObjectId, Schema } from "mongoose";
 const Follow = mongoose.model("Follow", new Schema(
 	{
 		id: ObjectId,
-		userFollowed: {
+		// List User người dùng theo dõi
+		followingUser: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'
 		},
-		userFollow: {
+		// User Id
+		followerUser: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'
 		}
