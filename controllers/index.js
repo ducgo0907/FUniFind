@@ -4,6 +4,8 @@ import commentController from './comment.js'
 import messageController from './message.js'
 import interactionController from './interaction.js';
 import imageController from './image.js';
+import reportController from './report.js';
+
 
 export {
 	userController,
@@ -11,5 +13,6 @@ export {
 	commentController,
 	messageController,
 	interactionController,
-	imageController
+	imageController,
+	reportController
 }

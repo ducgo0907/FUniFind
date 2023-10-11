@@ -134,6 +134,19 @@ const upload = async (req, res) => {
 	});
 }
 
+const getListPost = async (req, res) => {
+	console.log("Come here");
+	const page = parseInt(req.query.page) || 1;
+	const size = parseInt(req.query.size) || 5;
+	const startIndex = (page - 1) * size;
+	try {
+		const listPosts = await postRepository.getListPost(startIndex, size);
+		return res.status(201).json(listPosts);
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+}
+
 export default {
 	create,
 	edit,
@@ -142,6 +155,7 @@ export default {
 	approve,
 	getListPending,
 	getPostDetails,
-	upload
+	upload,
+	getListPost
 }
 

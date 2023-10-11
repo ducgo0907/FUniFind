@@ -3,7 +3,6 @@ import User from "../models/User.js";
 
 const verifyToken = async (req, res, next) => {
 	let token = req.headers["x-access-token"];
-
 	if (!token) {
 		return res.status(403).send({ message: "No token provide!" });
 	}
@@ -14,10 +13,10 @@ const verifyToken = async (req, res, next) => {
 		(error, decoded) => {
 			if (error) {
 				return res.status(401).send({
-					message: 'Unauthorized'
+					message: error
 				})
 			}
-			if(!decoded.isActive){
+			if (!decoded.isActive) {
 				return res.status(401).send({
 					message: 'User is not active'
 				})
@@ -33,10 +32,10 @@ const isAdmin = async (req, res, next) => {
 		if (!user) {
 			return res.status(400).send({ message: "User not found!" });
 		}
-		if(user.isAdmin){
+		if (user.isAdmin) {
 			next();
-		}else{
-			return res.status(403).send({message: "Require Admin Role"});
+		} else {
+			return res.status(403).send({ message: "Require Admin Role" });
 		}
 	} catch (error) {
 		return res.status(500).send({ message: error.message });

@@ -16,8 +16,21 @@ const create = async ({ content, userID, postID }) => {
 	}
 }
 
-const edit = async ({ content, postID, userID }) => {
-
+const edit = async ({ content, commentID, userID }) => {
+	try {
+		const comment = await Comment.findById(commentID);
+		if (!comment) {
+			throw new Error('Comment is not existed!!');
+		}
+		if (comment.user.toString() !== userID) {
+			throw new Error('Only user who creat post that can delete post');
+		}
+		comment.content = content;
+		await comment.save();
+		return comment;
+	} catch (error) {
+		throw new Error(error);
+	}
 }
 
 const deleteComment = async ({ commentID, userID }) => {

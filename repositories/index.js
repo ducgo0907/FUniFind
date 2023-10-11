@@ -4,6 +4,7 @@ import commentRepository from './comment.js';
 import messageRepository from './message.js';
 import imageRepository from './image.js';
 import interactionRepostiroy from './interaction.js';
+import reportRepository from './report.js'
 
 
 export {
@@ -12,5 +13,6 @@ export {
 	commentRepository,
 	messageRepository,
 	interactionRepostiroy,
-	imageRepository
+	imageRepository,
+	reportRepository
 }

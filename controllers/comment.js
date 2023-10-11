@@ -29,12 +29,11 @@ const edit = async (req, res) => {
 	}
 
 	// Destructuring Request Object of Post
-	const { content, postID } = req.body;
+	const { content, commentID } = req.body;
 	const userID = req.userID;
 	try {
-		// Call action cua Repository (DAO)
-		// await postRepository.edit({ content, postID, userID })
-		return res.status(201).json({ message: 'Edit post successfully.' });
+		await commentRepository.edit({ content, commentID, userID })
+		return res.status(201).json({ message: 'Edit message successfully.' });
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
