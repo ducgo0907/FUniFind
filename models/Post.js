@@ -9,7 +9,7 @@ const Post = mongoose.model("Post", new Schema(
 		},
 		status: {
 			type: String,
-			enum: ['PENDING', 'APPROVED', "REJECTED"],
+			enum: ['PENDING', 'APPROVED', "REJECTED", "BAN"],
 			default: 'PENDING'
 		},
 		user: {
