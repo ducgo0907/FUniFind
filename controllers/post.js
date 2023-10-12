@@ -143,6 +143,7 @@ const getListPost = async (req, res) => {
 	const query = {
 		content: { $regex: searchString, $options: 'i' }
 	};
+	query.status = "APPROVED"
 
 	const startIndex = (page - 1) * size;
 	try {
