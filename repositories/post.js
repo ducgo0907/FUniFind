@@ -140,7 +140,21 @@ const getPostDetail = async (postID) => {
 };
 
 const getListPost = async (startIndex, size, query) => {
-	const listPost = await Post.find(query).skip(startIndex).limit(size);
+	const listPost = await Post.find(query).skip(startIndex).limit(size)
+	.populate({
+		path: "user",
+		select: "name",
+	})
+	.populate({
+		path: "comments",
+		populate: {
+			path: "user",
+			select: "_id name",
+		},
+	})
+	.populate({
+		path: "images"
+	});
 	const totalPost = await Post.countDocuments(query);
 	
 	if (!listPost || listPost.length <= 0) {
