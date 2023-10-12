@@ -118,7 +118,7 @@ const approve = async ({ postID, isApprove }) => {
 
 const getPostDetail = async (postID) => {
 	try {
-		return await Post.find({ _id: postID })
+		return await Post.find({ _id: postID, status: "APPROVED" })
 			.populate({
 				path: "user",
 				select: "name",
