@@ -62,7 +62,7 @@ socketIO.on('connection', (socket) => {
 	});
 })
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 300;
 
 
 //Setting cloudinary for upload image
