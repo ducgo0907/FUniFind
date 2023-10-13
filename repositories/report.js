@@ -6,7 +6,7 @@ const all = async (startIndex, size) => {
 	const listReport = await Report.find().skip(startIndex).limit(size);
 	const totalReport = await Report.countDocuments();
 	if (!listReport || listReport.length <= 0) {
-		throw new Error("Don't have any report!");
+		return { message: "Don't have any report!" };
 	}
 	return {
 		data: listReport,
@@ -41,7 +41,6 @@ const reportPost = async ({ postId, userId, description }) => {
 		}
 		const newReport = await Report.create({ post: postId, user: userId, description, type: "POST" });
 		const distinctUserCount = await Report.find({ post: postId, type: "POST" }).distinct("user");
-		console.log(distinctUserCount.length);
 		if (distinctUserCount.length > 5) {
 			const postBanned = await Post.findByIdAndUpdate(postId, { status: "BAN" });
 			console.log("Post be banned: ", postBanned);
@@ -56,7 +55,7 @@ const getReportComment = async (startIndex, size) => {
 	const listReport = await Report.find({ type: 'COMMENT' }).skip(startIndex).limit(size);
 	const totalReport = await Report.countDocuments({ type: 'COMMENT' });
 	if (!listReport || listReport.length <= 0) {
-		throw new Error("Don't have any report!");
+		return { message: "Don't have any report!" };
 	}
 	return {
 		data: listReport,
@@ -68,7 +67,7 @@ const getReportPost = async (startIndex, size) => {
 	const listReport = await Report.find({ type: 'POST' }).skip(startIndex).limit(size);
 	const totalReport = await Report.countDocuments({ type: 'POST' });
 	if (!listReport || listReport.length <= 0) {
-		throw new Error("Don't have any report!");
+		return { message: "Don't have any report!" };
 	}
 	return {
 		data: listReport,
