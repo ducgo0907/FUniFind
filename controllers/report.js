@@ -49,7 +49,6 @@ const getReportComment = async (req, res) => {
 		description: { $regex: searchString, $options: 'i' }
 	};
 	query.type = "COMMENT";
-	console.log(query);
 	try {
 		const listReport = await reportRepository.getReportComment(startIndex, size, query);
 		return res.status(200).json({ message: 'Get report comment', data: listReport })
@@ -69,7 +68,6 @@ const getReportPost = async (req, res) => {
 		description: { $regex: searchString, $options: 'i' }
 	};
 	query.type = "POST";
-	console.log(query);
 	try {
 		const listReport = await reportRepository.getReportPost(startIndex, size, query);
 		return res.status(200).json({ message: 'Get report post', data: listReport })
