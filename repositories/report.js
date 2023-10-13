@@ -52,7 +52,11 @@ const reportPost = async ({ postId, userId, description }) => {
 }
 
 const getReportComment = async (startIndex, size, query) => {
-	const listReport = await Report.find(query).skip(startIndex).limit(size);
+	const listReport = await Report.find(query).skip(startIndex).limit(size)
+		.populate({
+			path: "user",
+			select: "name email"
+		});
 	const totalReport = await Report.countDocuments(query);
 	if (!listReport || listReport.length <= 0) {
 		return "Don't have any report!";
@@ -64,8 +68,11 @@ const getReportComment = async (startIndex, size, query) => {
 }
 
 const getReportPost = async (startIndex, size, query) => {
-	console.log(query);
-	const listReport = await Report.find(query).skip(startIndex).limit(size);
+	const listReport = await Report.find(query).skip(startIndex).limit(size)
+		.populate({
+			path: "user",
+			select: "name email"
+		});
 	const totalReport = await Report.countDocuments(query);
 	if (!listReport || listReport.length <= 0) {
 		return "Don't have any report!";
