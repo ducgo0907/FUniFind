@@ -1,6 +1,6 @@
 import express from 'express';
 import { interactionController } from '../controllers/index.js';
-import authJWT from '../middleware/authJWT.js';
+import { authJWT } from '../middleware/index.js'
 
 const interactionRouter = express.Router();
 
