@@ -1,6 +1,6 @@
 import express from 'express';
 import { followController } from '../controllers/index.js';
-import authJWT from '../middleware/authJWT.js';
+import { authJWT } from '../middleware/index.js'
 
 const followRouter = express.Router();
 
