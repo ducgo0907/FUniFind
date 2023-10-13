@@ -51,11 +51,11 @@ const reportPost = async ({ postId, userId, description }) => {
 	}
 }
 
-const getReportComment = async (startIndex, size) => {
-	const listReport = await Report.find({ type: 'COMMENT' }).skip(startIndex).limit(size);
-	const totalReport = await Report.countDocuments({ type: 'COMMENT' });
+const getReportComment = async (startIndex, size, query) => {
+	const listReport = await Report.find(query).skip(startIndex).limit(size);
+	const totalReport = await Report.countDocuments(query);
 	if (!listReport || listReport.length <= 0) {
-		return { message: "Don't have any report!" };
+		return "Don't have any report!";
 	}
 	return {
 		data: listReport,
@@ -63,11 +63,12 @@ const getReportComment = async (startIndex, size) => {
 	};
 }
 
-const getReportPost = async (startIndex, size) => {
-	const listReport = await Report.find({ type: 'POST' }).skip(startIndex).limit(size);
-	const totalReport = await Report.countDocuments({ type: 'POST' });
+const getReportPost = async (startIndex, size, query) => {
+	console.log(query);
+	const listReport = await Report.find(query).skip(startIndex).limit(size);
+	const totalReport = await Report.countDocuments(query);
 	if (!listReport || listReport.length <= 0) {
-		return { message: "Don't have any report!" };
+		return "Don't have any report!";
 	}
 	return {
 		data: listReport,

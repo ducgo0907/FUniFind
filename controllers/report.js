@@ -44,8 +44,14 @@ const getReportComment = async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
 	const size = parseInt(req.query.size) || 5;
 	const startIndex = (page - 1) * size;
+	const searchString = req.query.searchString || '';
+	const query = {
+		description: { $regex: searchString, $options: 'i' }
+	};
+	query.type = "COMMENT";
+	console.log(query);
 	try {
-		const listReport = await reportRepository.getReportComment(startIndex, size);
+		const listReport = await reportRepository.getReportComment(startIndex, size, query);
 		return res.status(200).json({ message: 'Get report comment', data: listReport })
 	} catch (error) {
 		return res.status(500).json({
@@ -58,8 +64,14 @@ const getReportPost = async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
 	const size = parseInt(req.query.size) || 5;
 	const startIndex = (page - 1) * size;
+	const searchString = req.query.searchString || '';
+	const query = {
+		description: { $regex: searchString, $options: 'i' }
+	};
+	query.type = "POST";
+	console.log(query);
 	try {
-		const listReport = await reportRepository.getReportPost(startIndex, size);
+		const listReport = await reportRepository.getReportPost(startIndex, size, query);
 		return res.status(200).json({ message: 'Get report post', data: listReport })
 	} catch (error) {
 		return res.status(500).json({

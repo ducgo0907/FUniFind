@@ -135,7 +135,6 @@ const upload = async (req, res) => {
 }
 
 const getListPost = async (req, res) => {
-	console.log("Come here");
 	const page = parseInt(req.query.page) || 1;
 	const size = parseInt(req.query.size) || 5;
 	const searchString = req.query.searchString || '';
