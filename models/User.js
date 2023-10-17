@@ -41,7 +41,16 @@ const User = mongoose.model("User", new Schema({
 	activationCode: {
 		type: String,
 		require: false
-	}
+	},
+	profiles: [{
+		id: {
+			type: ObjectId,
+			ref: "Profile"
+		},
+		url: {
+			type: String
+		}
+	}]
 }))
 
 export default User;

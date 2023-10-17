@@ -5,7 +5,7 @@ const getListUserFollow = async (userId, startIndex, size) => {
 	try {
 		const listUserFollowing = await Follow.find({ followerUser: userId }).skip(startIndex).limit(size);
 		if (!listUserFollowing) {
-			throw new Error("You are following anyone");
+			return "You are following anyone";
 		}
 		const totalFollowing = await Follow.countDocuments({ followerUser: userId });
 		return {

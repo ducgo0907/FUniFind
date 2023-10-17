@@ -78,12 +78,19 @@ const approve = async (req, res) => {
 };
 
 const getListPending = async (req, res) => {
+	const page = parseInt(req.query.page) || 1;
+	const size = parseInt(req.query.size) || 5;
+	const searchString = req.query.searchString || '';
+
+	const query = {
+		content: { $regex: searchString, $options: 'i' }
+	};
+	query.status = "PENDING"
+
+	const startIndex = (page - 1) * size;
 	try {
-		const listPostPending = await postRepository.getListPending();
-		return res.status(200).json({
-			message: "Get data successfully",
-			data: listPostPending,
-		});
+		const listPostPending = await postRepository.getListPending(startIndex, size, query);
+		return res.status(200).json(listPostPending);
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
@@ -153,6 +160,17 @@ const getListPost = async (req, res) => {
 	}
 }
 
+const banPost = async (req, res) => {
+	const { postID } = req.body;
+	const userID = req.userID;
+	try {
+		await postRepository.banPost({ postID, userID });
+		return res.status(201).json({ message: "Ban post successfully." });
+	} catch (error) {
+		return res.status(400).json({ message: error.toString() });
+	}
+}
+
 export default {
 	create,
 	edit,
@@ -162,6 +180,7 @@ export default {
 	getListPending,
 	getPostDetails,
 	upload,
-	getListPost
+	getListPost,
+	banPost
 }
 

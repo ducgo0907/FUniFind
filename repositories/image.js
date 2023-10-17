@@ -1,5 +1,7 @@
 import Image from "../models/Image.js";
 import Post from "../models/Post.js";
+import Profile from "../models/Profile.js";
+import User from "../models/User.js";
 
 const create = async ({ url, userID, postID }) => {
 	try {
@@ -12,6 +14,18 @@ const create = async ({ url, userID, postID }) => {
 	}
 }
 
+const addProfile = async ({ url, userID }) => {
+	try {
+		const newProfile = await Profile.create({ url, user: userID });
+		// Update new image to user's profile array
+		await User.findByIdAndUpdate(userID, { $push: { profiles: {id: newProfile._id, url: newProfile.url} } });
+		return newProfile;
+	} catch (error) {
+		throw new Error(error);
+	}
+}
+
 export default {
-	create
+	create,
+	addProfile
 };

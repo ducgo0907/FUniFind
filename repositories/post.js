@@ -77,9 +77,9 @@ const deletePost = async ({ postID, userID }) => {
 	}
 };
 
-const getListPending = async () => {
+const getListPending = async (startIndex, size, query) => {
 	try {
-		const listPostPending = await Post.find({ status: "PENDING" })
+		const listPostPending = await Post.find(query).skip(startIndex).limit(size)
 			.populate({
 				path: "user",
 				select: "name",
@@ -92,10 +92,14 @@ const getListPending = async () => {
 				},
 			})
 			.exec();
+		const totalPost = await Post.countDocuments(query);
 		if (listPostPending == null) {
 			throw new Error("Don't have any post is pending status");
 		}
-		return listPostPending;
+		return {
+			listPostPending,
+			totalPost
+		};
 	} catch (error) {
 		throw new Error(error);
 	}
@@ -141,22 +145,22 @@ const getPostDetail = async (postID) => {
 
 const getListPost = async (startIndex, size, query) => {
 	const listPost = await Post.find(query).skip(startIndex).limit(size)
-	.populate({
-		path: "user",
-		select: "name",
-	})
-	.populate({
-		path: "comments",
-		populate: {
+		.populate({
 			path: "user",
-			select: "_id name",
-		},
-	})
-	.populate({
-		path: "images"
-	});
+			select: "name",
+		})
+		.populate({
+			path: "comments",
+			populate: {
+				path: "user",
+				select: "_id name",
+			},
+		})
+		.populate({
+			path: "images"
+		});
 	const totalPost = await Post.countDocuments(query);
-	
+
 	if (!listPost || listPost.length <= 0) {
 		throw new Error("Don't have any post!");
 	}
@@ -164,6 +168,24 @@ const getListPost = async (startIndex, size, query) => {
 		data: listPost,
 		totalPost
 	};
+}
+
+const banPost = async ({ postID, userID }) => {
+	try {
+		const post = await Post.findById(postID);
+		console.log(postID);
+		if (!post) {
+			throw new Error("Post is not existed!!");
+		}
+		if (post.user.toString() !== userID) {
+			throw new Error("Only user who creat post that can delete post");
+		}
+		post.status = "BAN";
+		await post.save();
+		return post;
+	} catch (error) {
+		throw new Error(error);
+	}
 }
 
 export default {
@@ -174,5 +196,6 @@ export default {
 	getListPending,
 	approve,
 	getPostDetail,
-	getListPost
+	getListPost,
+	banPost
 };

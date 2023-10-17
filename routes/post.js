@@ -34,7 +34,7 @@ postRouter.post(
 );
 
 postRouter.get(
-	"/listApprove",
+	"/listPending",
 	[authJWT.verifyToken, authJWT.isAdmin],
 	postController.getListPending
 );
@@ -48,4 +48,6 @@ postRouter.get(
 	[authJWT.verifyToken, authJWT.isAdmin],
 	postController.getPostDetails
 );
+
+postRouter.put("/ban", [authJWT.verifyToken], postController.banPost)
 export default postRouter;
