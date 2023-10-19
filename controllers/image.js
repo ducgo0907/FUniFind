@@ -21,7 +21,7 @@ const upload = async (req, res) => {
 					const result = await cloudinary.uploader.upload(imagePath, options);
 					urls.push(result.secure_url);
 					// Tao moi anh
-					await imageRepository.create({ url: result.secure_url, postID: postId, user: userId });
+					await imageRepository.create({ url: result.secure_url, postID: postId, userID: userId });
 					if (i === filesData.length - 1 && !!result.secure_url) {
 						return res.status(200).json({ data: urls });
 					}
