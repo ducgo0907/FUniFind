@@ -24,7 +24,7 @@ const register = async ({ name, email, password, phoneNumber, address }) => {
 		activationCode
 	});
 
-	const linkActivateCode = `http://localhost:8080/users/activate?email=${email}&activationCode=${activationCode}`;
+	const linkActivateCode = `${process.env.WEB_URL}users/activate?email=${email}&activationCode=${activationCode}`;
 	sendMail(linkActivateCode, email)
 		.then(() => {
 			console.log("Send mail successfully");
