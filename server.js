@@ -37,7 +37,7 @@ app.use(router);
 const connectedUsers = {};
 
 socketIO.on('connection', (socket) => {
-	console.log("User connected: ", socket.id);
+	console.log("User connected,: ", socket.id);
 	socket.on('storeUserId', (userId) => {
 		connectedUsers[userId] = socket.id;
 	})
