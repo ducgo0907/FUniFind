@@ -1,9 +1,9 @@
 import Comment from "../models/Comment.js";
 import Post from "../models/Post.js";
 
-const create = async ({ content, userID }) => {
+const create = async ({ content, userID, location }) => {
 	try {
-		const newPost = (await Post.create({ content, user: userID })).populate(
+		const newPost = (await Post.create({ content, user: userID, location })).populate(
 			"user",
 			"name"
 		);
@@ -13,7 +13,7 @@ const create = async ({ content, userID }) => {
 	}
 };
 
-const edit = async ({ content, postID, userID }) => {
+const edit = async ({ content, postID, userID, location }) => {
 	try {
 		const post = await Post.findById(postID);
 		if (!post) {
@@ -23,6 +23,7 @@ const edit = async ({ content, postID, userID }) => {
 			throw new Error("Only user who creat post that can edit post");
 		}
 		post.content = content;
+		post.location = location ? location : post.location;
 		await post.save();
 	} catch (error) {
 		throw new Error(error);

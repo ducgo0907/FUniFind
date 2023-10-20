@@ -12,11 +12,11 @@ const create = async (req, res) => {
 	}
 
 	// Destructuring Request Object of Post
-	const { content } = req.body;
+	const { content, location } = req.body;
 	const userID = req.userID;
 	try {
 		// Call action cua Repository (DAO)
-		const newPost = await postRepository.create({ content, userID });
+		const newPost = await postRepository.create({ content, userID, location });
 		return res.status(201).json({
 			message: "Create post successfully",
 			data: newPost,
@@ -33,11 +33,11 @@ const edit = async (req, res) => {
 	}
 
 	// Destructuring Request Object of Post
-	const { content, postID } = req.body;
+	const { content, postID, location } = req.body;
 	const userID = req.userID;
 	try {
 		// Call action cua Repository (DAO)
-		await postRepository.edit({ content, postID, userID });
+		await postRepository.edit({ content, postID, userID, location });
 		return res.status(201).json({ message: "Edit post successfully." });
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });

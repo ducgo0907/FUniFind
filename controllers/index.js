@@ -6,6 +6,7 @@ import interactionController from './interaction.js';
 import imageController from './image.js';
 import reportController from './report.js';
 import followController from './follow.js'
+import locationController from './locations.js'
 
 
 export {
@@ -16,5 +17,6 @@ export {
 	interactionController,
 	imageController,
 	reportController,
-	followController
+	followController,
+	locationController
 }

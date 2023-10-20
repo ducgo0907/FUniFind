@@ -33,7 +33,11 @@ const Post = mongoose.model("Post", new Schema(
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Image',
 			}
-		]
+		],
+		location: {
+			type: String,
+			require: false,
+		}
 	},
 	{
 		timestamps: true
