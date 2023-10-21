@@ -72,10 +72,32 @@ const getUserById = async (req, res) => {
 	}
 }
 
+const changeActiveUser = async (req, res) => {
+	const { userId } = req.body;
+	try {
+		const user = await userRepository.changeActiveUser(userId);
+		return res.status(200).json(user)
+	} catch (error) {
+		return res.status(500).json({ error: error.toString() });
+	}
+}
+
+const setAdmin = async (req, res) => {
+	const { userId } = req.body;
+	try {
+		const user = await userRepository.setAdmin({ userId });
+		return res.status(200).json(user)
+	} catch (error) {
+		return res.status(500).json({ error: error.toString() });
+	}
+}
+
 export default {
 	register,
 	getAllUser,
 	login,
 	activateAccount,
-	getUserById
+	getUserById,
+	setAdmin,
+	changeActiveUser
 }

@@ -18,7 +18,11 @@ userRouter.post("/login", verifySignIn.checkEmailFPT, userController.login);
 
 userRouter.get("/activate", userController.activateAccount);
 
-userRouter.get("/:id", userController.getUserById)
+userRouter.get("/:id", userController.getUserById);
+
+userRouter.put("/changeActive", [authJWT.verifyToken, authJWT.isAdmin], userController.changeActiveUser);
+
+userRouter.put("/setAdmin", [authJWT.verifyToken, authJWT.isAdmin], userController.setAdmin);
 
 
 export default userRouter;

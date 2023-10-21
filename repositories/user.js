@@ -104,6 +104,26 @@ const getUserById = async (id) => {
 	return user;
 }
 
+const changeActiveUser = async (userId) => {
+	const user = await User.findById(userId).select("-password").exec();
+	console.log(user);
+	if (!user) {
+		return "User with this ID don't existed";
+	}
+	user.isActive = !user.isActive;
+	await user.save();
+	return user;
+}
+
+const setAdmin = async ({ userId }) => {
+	const user = await User.findById(userId).select("-password").exec();
+	if(!user) {
+		return "User with this ID don't existed";
+	}
+	user.isAdmin = !user.isAdmin;
+	await user.save();
+	return user;
+}
 // Actions wirk DB: ...
 
 export default {
@@ -111,5 +131,7 @@ export default {
 	getAllUsers,
 	login,
 	activateAccount,
-	getUserById
+	getUserById,
+	setAdmin,
+	changeActiveUser
 };
