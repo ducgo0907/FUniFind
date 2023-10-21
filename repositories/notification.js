@@ -5,7 +5,7 @@ const getNotification = async (startIndex, size, query) => {
 	const totalNoti = await Notification.countDocuments(query);
 
 	if (!listNoti || listNoti.length <= 0) {
-		return {message: "Don't have any notification!"}
+		return { message: "Don't have any notification!" }
 	}
 	return {
 		data: listNoti,
@@ -13,6 +13,12 @@ const getNotification = async (startIndex, size, query) => {
 	};
 }
 
+const createNotification = async (content, userId) => {
+	const newNoti = await Notification.create({content, user: userId});
+	return newNoti;
+}
+
 export default {
-	getNotification
+	getNotification,
+	createNotification
 };

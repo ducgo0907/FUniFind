@@ -8,12 +8,24 @@ const getNotification = async (req, res) => {
 	const startIndex = (page - 1) * size;
 	try {
 		const listNoti = await notificationRepository.getNotification(startIndex, size, query);
-		return res.status(201).json(listNoti);
+		return res.status(200).json(listNoti);
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+}
+
+const createNotification = async (req, res) => {
+	const { content } = req.body;
+	const userId = req.userID;
+	try {
+		const notification = await notificationRepository.createNotification(content, userId);
+		return res.status(201).json(notification);
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
 }
 
 export default {
-	getNotification
+	getNotification,
+	createNotification
 }
