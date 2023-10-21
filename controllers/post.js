@@ -145,12 +145,14 @@ const getListPost = async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
 	const size = parseInt(req.query.size) || 5;
 	const searchString = req.query.searchString || '';
-
+	const location = req.query.location || '';
 	const query = {
-		content: { $regex: searchString, $options: 'i' }
+		content: { $regex: searchString, $options: 'i' },
 	};
 	query.status = "APPROVED"
-
+	if(location !== ''){
+		query.location = {$regex: location, $options: 'i'};
+	}
 	const startIndex = (page - 1) * size;
 	try {
 		const listPosts = await postRepository.getListPost(startIndex, size, query);

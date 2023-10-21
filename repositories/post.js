@@ -145,7 +145,7 @@ const getPostDetail = async (postID) => {
 };
 
 const getListPost = async (startIndex, size, query) => {
-	const listPost = await Post.find(query).skip(startIndex).limit(size)
+	const listPost = await Post.find(query).skip(startIndex).limit(size).sort({ createdAt: -1 })
 		.populate({
 			path: "user",
 			select: "name",
