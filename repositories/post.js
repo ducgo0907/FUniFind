@@ -1,5 +1,6 @@
 import Comment from "../models/Comment.js";
 import Post from "../models/Post.js";
+import User from "../models/User.js";
 
 const create = async ({ content, userID, location }) => {
 	try {
@@ -174,12 +175,13 @@ const getListPost = async (startIndex, size, query) => {
 const banPost = async ({ postID, userID }) => {
 	try {
 		const post = await Post.findById(postID);
-		console.log(postID);
+		const user = await User.findById(userID);
+		console.log(postID, user);
 		if (!post) {
 			throw new Error("Post is not existed!!");
 		}
-		if (post.user.toString() !== userID) {
-			throw new Error("Only user who creat post that can delete post");
+		if (!user.isAdmin) {
+			throw new Error("Only admin can ban post");
 		}
 		post.status = "BAN";
 		await post.save();
