@@ -1,4 +1,5 @@
 import Comment from "../models/Comment.js";
+import Notification from "../models/Notification.js";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 
@@ -109,13 +110,21 @@ const getListPending = async (startIndex, size, query) => {
 
 const approve = async ({ postID, isApprove }) => {
 	try {
-		const post = await Post.findById(postID);
+		const post = await Post.findById(postID)
+			.populate({
+				path: "user",
+				select: "name",
+			});
+		console.log(post);
 		if (!post) {
-			throw new Error("Post is not existed");
+			return { message: "Post is not existed" };
 		}
+		console.log(post);
 		const status = isApprove ? "APPROVED" : "REJECTED";
 		post.status = status;
 		await post.save();
+		const notification = `Admin ${status} your post!`;
+		await Notification.create({ user: post.user._id, content: notification });
 		return post;
 	} catch (error) {
 		throw new Error(error);
