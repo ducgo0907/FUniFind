@@ -4,7 +4,7 @@ import { authJWT } from '../middleware/index.js'
 
 const messageRouter = express.Router();
 
-messageRouter.get('/all', messageController.getAllMessage);
+messageRouter.get('/all', [authJWT.verifyToken],messageController.getAllMessage);
 messageRouter.post('/save', [authJWT.verifyToken], messageController.saveMessage);
 
 export default messageRouter;

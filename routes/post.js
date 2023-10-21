@@ -41,7 +41,11 @@ postRouter.get(
 
 postRouter.post("/upload", postController.upload);
 
-postRouter.get("/list", postController.getListPost)
+postRouter.get("/list", postController.getListPost);
+
+postRouter.get("/listBan",
+	[authJWT.verifyToken, authJWT.isAdmin],
+	postController.getListPostBan);
 
 postRouter.get(
 	"/:id",
@@ -49,5 +53,6 @@ postRouter.get(
 	postController.getPostDetails
 );
 
-postRouter.put("/ban", [authJWT.verifyToken, authJWT.isAdmin], postController.banPost)
+
+postRouter.put("/ban", [authJWT.verifyToken, authJWT.isAdmin], postController.banPost);
 export default postRouter;

@@ -173,6 +173,27 @@ const banPost = async (req, res) => {
 	}
 }
 
+const getListPostBan = async (req, res) => {
+	const page = parseInt(req.query.page) || 1;
+	const size = parseInt(req.query.size) || 5;
+	const searchString = req.query.searchString || '';
+	const location = req.query.location || '';
+	const query = {
+		content: { $regex: searchString, $options: 'i' },
+	};
+	query.status = "BAN";
+	if(location !== ''){
+		query.location = {$regex: location, $options: 'i'};
+	}
+	const startIndex = (page - 1) * size;
+	try {
+		const listPosts = await postRepository.getListPost(startIndex, size, query);
+		return res.status(201).json(listPosts);
+	} catch (error) {
+		return res.status(500).json({ message: error.toString()});
+	}
+}
+
 export default {
 	create,
 	edit,
@@ -183,6 +204,7 @@ export default {
 	getPostDetails,
 	upload,
 	getListPost,
-	banPost
+	banPost,
+	getListPostBan
 }
 
