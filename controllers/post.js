@@ -8,7 +8,7 @@ import Image from "../models/Image.js";
 const create = async (req, res) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		return res.status(400).json({ error: error.array() });
+		return res.status(400).json({ message: error.array()[0].msg });
 	}
 
 	// Destructuring Request Object of Post
@@ -29,7 +29,7 @@ const create = async (req, res) => {
 const edit = async (req, res) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		return res.status(400).json({ error: error.array() });
+		return res.status(400).json({ message: error.array()[0].msg });
 	}
 
 	// Destructuring Request Object of Post

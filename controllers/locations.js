@@ -4,7 +4,7 @@ import { locationRepository } from "../repositories/index.js";
 const create = async (req, res) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		return res.status(400).json({ error: error.array() });
+		return res.status(400).json({ message: error.array()[0].msg });
 	}
 
 	const { name } = req.body;
@@ -19,7 +19,7 @@ const create = async (req, res) => {
 const edit = async (req, res) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		return res.status(400).json({ error: error.array() });
+		return res.status(400).json({ message: error.array()[0].msg });
 	}
 	const { id, name } = req.body;
 	try {

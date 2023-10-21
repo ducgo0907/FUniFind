@@ -4,7 +4,7 @@ import { userRepository } from "../repositories/index.js";
 const register = async (req, res) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		return res.status(400).json({ error: error.array() });
+		return res.status(400).json({ message: error.array()[0].msg });
 	}
 
 	// Destructuring Request Object
@@ -30,7 +30,7 @@ const getAllUser = async (req, res) => {
 const login = async (req, res) => {
 	const error = validationResult(req);
 	if (!error.isEmpty()) {
-		return res.status(400).json({ error: error.array() });
+		return res.status(400).json({ message: error.array()[0].msg });
 	}
 
 	const { email, password } = req.body;
