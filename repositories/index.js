@@ -7,6 +7,7 @@ import interactionRepostiroy from './interaction.js';
 import reportRepository from './report.js'
 import followRepository from './follow.js'
 import locationRepository from './locations.js'
+import notificationRepository from './notification.js'
 
 
 export {
@@ -18,5 +19,6 @@ export {
 	imageRepository,
 	reportRepository,
 	followRepository,
-	locationRepository
+	locationRepository,
+	notificationRepository
 }

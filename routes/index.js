@@ -8,6 +8,7 @@ import reportRouter from "./report.js";
 import imageRouter from "./image.js";
 import followRouter from "./follow.js";
 import locationRouter from "./location.js";
+import notificationRouter from "./notification.js";
 
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.use("/reports", reportRouter);
 router.use("/images", imageRouter);
 router.use("/follows", followRouter)
 router.use("/locations", locationRouter);
+router.use("/notifications", notificationRouter)
 
 export default router;

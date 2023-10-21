@@ -7,6 +7,7 @@ import imageController from './image.js';
 import reportController from './report.js';
 import followController from './follow.js'
 import locationController from './locations.js'
+import notificationController from './notification.js'
 
 
 export {
@@ -18,5 +19,6 @@ export {
 	imageController,
 	reportController,
 	followController,
-	locationController
+	locationController,
+	notificationController
 }
