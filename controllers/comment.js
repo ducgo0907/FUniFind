@@ -14,7 +14,7 @@ const create = async (req, res) => {
 		// Call action cua Repository (DAO)
 		const newComment = await commentRepository.create({ content, userID, postID })
 		return res.status(201).json({
-			message: 'Create post successfully',
+			message: 'Create comment successfully',
 			data: newComment
 		})
 	} catch (error) {
@@ -33,7 +33,7 @@ const edit = async (req, res) => {
 	const userID = req.userID;
 	try {
 		await commentRepository.edit({ content, commentID, userID })
-		return res.status(201).json({ message: 'Edit message successfully.' });
+		return res.status(201).json({ message: 'Edit comment successfully.' });
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });
 	}
@@ -45,7 +45,7 @@ const deleteComment = async (req, res) => {
 	try {
 		const commentDelete = await commentRepository.deleteComment({ commentID, userID });
 		return res.status(201).json({
-			message: 'Delete post successfully.',
+			message: 'Delete comment successfully.',
 			data: commentDelete
 		});
 	} catch (error) {
