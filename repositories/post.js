@@ -201,6 +201,25 @@ const banPost = async ({ postID, userID }) => {
 	}
 }
 
+const unBanPost = async ({ postID, userID }) => {
+	try {
+		const post = await Post.findById(postID);
+		const user = await User.findById(userID);
+		console.log(postID, user);
+		if (!post) {
+			throw new Error("Post is not existed!!");
+		}
+		if (!user.isAdmin) {
+			throw new Error("Only admin can ban post");
+		}
+		post.status = "APPROVED";
+		await post.save();
+		return post;
+	} catch (error) {
+		throw new Error(error);
+	}
+}
+
 export default {
 	create,
 	edit,
@@ -210,5 +229,6 @@ export default {
 	approve,
 	getPostDetail,
 	getListPost,
-	banPost
+	banPost,
+	unBanPost
 };

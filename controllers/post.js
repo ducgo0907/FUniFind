@@ -173,6 +173,17 @@ const banPost = async (req, res) => {
 	}
 }
 
+const unBanPost = async (req, res) => {
+	const { postID } = req.body;
+	const userID = req.userID;
+	try {
+		await postRepository.unBanPost({ postID, userID });
+		return res.status(201).json({ message: "Unban post successfully." });
+	} catch (error) {
+		return res.status(400).json({ message: error.toString() });
+	}
+}
+
 const getListPostBan = async (req, res) => {
 	const page = parseInt(req.query.page) || 1;
 	const size = parseInt(req.query.size) || 5;
@@ -205,6 +216,7 @@ export default {
 	upload,
 	getListPost,
 	banPost,
-	getListPostBan
+	getListPostBan,
+	unBanPost
 }
 

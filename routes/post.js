@@ -55,4 +55,5 @@ postRouter.get(
 
 
 postRouter.put("/ban", [authJWT.verifyToken, authJWT.isAdmin], postController.banPost);
+postRouter.put("/unban", [authJWT.verifyToken, authJWT.isAdmin], postController.unBanPost);
 export default postRouter;

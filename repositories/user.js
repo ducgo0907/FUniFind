@@ -132,8 +132,9 @@ const edit = async ({ name, password, phoneNumber, address, userId }) => {
 	if (!editUser) {
 		return { message: "User is not existed" };
 	}
+	const hashPassword = await bcrypt.hash(password, parseInt(process.env.SECRET_KEY));
 	editUser.name = name;
-	editUser.password = password;
+	editUser.password = hashPassword;
 	editUser.phoneNumber = phoneNumber;
 	editUser.address = address;
 	try {
