@@ -35,8 +35,12 @@ const Post = mongoose.model("Post", new Schema(
 			}
 		],
 		location: {
-			type: String,
-			require: false,
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Location',
+		},
+		approvedAt: {
+			type: Date,
+			require: false
 		}
 	},
 	{

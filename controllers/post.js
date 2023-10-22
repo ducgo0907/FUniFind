@@ -151,7 +151,7 @@ const getListPost = async (req, res) => {
 	};
 	query.status = "APPROVED"
 	if(location !== ''){
-		query.location = {$regex: location, $options: 'i'};
+		query.location = location;
 	}
 	const startIndex = (page - 1) * size;
 	try {
@@ -194,7 +194,7 @@ const getListPostBan = async (req, res) => {
 	};
 	query.status = "BAN";
 	if(location !== ''){
-		query.location = {$regex: location, $options: 'i'};
+		query.location = location;
 	}
 	const startIndex = (page - 1) * size;
 	try {

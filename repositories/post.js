@@ -115,13 +115,12 @@ const approve = async ({ postID, isApprove }) => {
 				path: "user",
 				select: "name",
 			});
-		console.log(post);
 		if (!post) {
 			return { message: "Post is not existed" };
 		}
-		console.log(post);
 		const status = isApprove ? "APPROVED" : "REJECTED";
 		post.status = status;
+		post.approvedAt = new Date();
 		await post.save();
 		const notification = `Admin ${status} your post!`;
 		await Notification.create({ user: post.user._id, content: notification });
@@ -169,8 +168,11 @@ const getListPost = async (startIndex, size, query) => {
 			},
 		})
 		.populate({
+			path: "location"
+		})
+		.populate({
 			path: "images"
-		});
+		})
 	const totalPost = await Post.countDocuments(query);
 
 	if (!listPost || listPost.length <= 0) {
