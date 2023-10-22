@@ -1,13 +1,13 @@
 import { messageRepository } from "../repositories/index.js";
 
-const saveMessage = async ({ req, res }) => {
-	const { sender, receiver, message } = req.body
+const saveMessage = async (req, res) => {
+	const { sender, receiver, message } = req.body;
 	try {
 		const newMessage = await messageRepository.saveMessage({ sender, receiver, message });
-		return {
+		return res.status(200).json({
 			message: 'Created success',
 			data: newMessage
-		}
+		})
 	} catch (error) {
 		return res.status(500).json({ error: error.toString() });
 	}
