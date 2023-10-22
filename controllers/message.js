@@ -16,7 +16,8 @@ const saveMessage = async (req, res) => {
 const getAllMessage = async (req, res) => {
 	try {
 		const { receiver, sender } = req.query;
-		const listMessages = await messageRepository.getAllMessage(receiver, sender);
+		const userId = req.userID;
+		const listMessages = await messageRepository.getAllMessage(receiver, sender, userId);
 		return res.status(200).json({
 			status: 'success',
 			data: listMessages

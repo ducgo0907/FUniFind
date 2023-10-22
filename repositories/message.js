@@ -1,10 +1,14 @@
 import Message from "../models/Message.js"
+import User from "../models/User.js";
 
-const getAllMessage = async (receiver, sender) => {
+const getAllMessage = async (receiver, sender, userId) => {
+	const user = await User.findOne({ email: sender });
+	if (user._id.toString() !== userId) {
+		return {message: "You don't have access to this messages"};
+	}
 	const listAllMessage = await Message.find({
 		$or: [{ sender: sender, receiver: receiver }, { sender: receiver, receiver: sender }]
 	}).sort({ createdAt: 1 });
-
 	return listAllMessage;
 }
 
