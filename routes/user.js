@@ -24,5 +24,9 @@ userRouter.put("/changeActive", [authJWT.verifyToken, authJWT.isAdmin], userCont
 
 userRouter.put("/setAdmin", [authJWT.verifyToken, authJWT.isAdmin], userController.setAdmin);
 
+userRouter.put("/edit", [
+	body("password").isLength({ min: 8 }).withMessage('Password must be greater than or equal 8'),
+	authJWT.verifyToken
+], userController.edit);
 
 export default userRouter;

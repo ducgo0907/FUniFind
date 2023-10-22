@@ -49,9 +49,20 @@ const getAllLocation = async (req, res) => {
 	}
 }
 
+const getDetail = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const deleteLocation = await locationRepository.getDetail(id);
+		return res.status(200).json(deleteLocation);
+	} catch (error) {
+		return res.status(500).json({ error: error.toString() })
+	}
+}
+
 export default {
 	create,
 	edit,
 	deleteLocation,
-	getAllLocation
+	getAllLocation,
+	getDetail
 }

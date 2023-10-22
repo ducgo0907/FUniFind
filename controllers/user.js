@@ -92,6 +92,24 @@ const setAdmin = async (req, res) => {
 	}
 }
 
+const edit = async (req, res) => {
+	const error = validationResult(req);
+	if (!error.isEmpty()) {
+		return res.status(400).json({ message: error.array()[0].msg });
+	}
+
+	// Destructuring Request Object
+	const { name, password, phoneNumber, address } = req.body;
+	const userId = req.userID;
+	try {
+		// Call action cua Repository (DAO)
+		const editUser = await userRepository.edit({ name, password, phoneNumber, address, userId })
+		return res.status(201).json({ editUser })
+	} catch (error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+}
+
 export default {
 	register,
 	getAllUser,
@@ -99,5 +117,6 @@ export default {
 	activateAccount,
 	getUserById,
 	setAdmin,
-	changeActiveUser
+	changeActiveUser,
+	edit
 }

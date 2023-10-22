@@ -48,9 +48,22 @@ const getAllLocation = async () => {
 	}
 }
 
+const getDetail = async (id) => {
+	try {
+		const location = await Location.findById(id);
+		if (!location) {
+			return { message: "Location is not existed" }
+		}
+		return location;
+	} catch (error) {
+		throw new Error(error.toString());
+	}
+}
+
 export default {
 	create,
 	edit,
 	deleteLocation,
-	getAllLocation
+	getAllLocation,
+	getDetail
 };

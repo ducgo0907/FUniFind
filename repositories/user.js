@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import sendMail from "../util/sendMail.js";
+import user from "../controllers/user.js";
 
 const register = async ({ name, email, password, phoneNumber, address }) => {
 	// Kiem tra su ton tai cua User
@@ -117,14 +118,31 @@ const changeActiveUser = async (userId) => {
 
 const setAdmin = async ({ userId }) => {
 	const user = await User.findById(userId).select("-password").exec();
-	if(!user) {
+	if (!user) {
 		return "User with this ID don't existed";
 	}
 	user.isAdmin = !user.isAdmin;
 	await user.save();
 	return user;
 }
-// Actions wirk DB: ...
+
+
+const edit = async ({ name, password, phoneNumber, address, userId }) => {
+	const editUser = await User.findById(userId);
+	if (!editUser) {
+		return { message: "User is not existed" };
+	}
+	editUser.name = name;
+	editUser.password = password;
+	editUser.phoneNumber = phoneNumber;
+	editUser.address = address;
+	try {
+		await editUser.save();
+		return editUser;
+	} catch (error) {
+		throw new Error({ message: error }.toString());
+	}
+}
 
 export default {
 	register,
@@ -133,5 +151,6 @@ export default {
 	activateAccount,
 	getUserById,
 	setAdmin,
-	changeActiveUser
+	changeActiveUser,
+	edit
 };

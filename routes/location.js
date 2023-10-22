@@ -20,4 +20,6 @@ locationRouter.put('/edit', [
 	locationController.edit);
 locationRouter.delete('/delete/:id', [authJWT.verifyToken, authJWT.isAdmin], locationController.deleteLocation);
 
+locationRouter.get("/detail/:id", locationController.getDetail);
+
 export default locationRouter;
