@@ -10,6 +10,7 @@ import followRouter from "./follow.js";
 import locationRouter from "./location.js";
 import notificationRouter from "./notification.js";
 import configRouter from "./config.js";
+import readRouter from "./read.js";
 
 
 const router = express.Router();
@@ -24,6 +25,7 @@ router.use("/images", imageRouter);
 router.use("/follows", followRouter)
 router.use("/locations", locationRouter);
 router.use("/notifications", notificationRouter);
-router.use("/config", configRouter)
+router.use("/config", configRouter);
+router.use("/read", readRouter)
 
 export default router;

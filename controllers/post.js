@@ -145,6 +145,7 @@ const getListPost = async (req, res) => {
 	const size = parseInt(req.query.size) || 5;
 	const searchString = req.query.searchString || '';
 	const location = req.query.location || '';
+	const userId = req.query.userId;
 	const query = {
 		content: { $regex: searchString, $options: 'i' },
 	};
@@ -154,7 +155,7 @@ const getListPost = async (req, res) => {
 	}
 	const startIndex = (page - 1) * size;
 	try {
-		const listPosts = await postRepository.getListPost(startIndex, size, query);
+		const listPosts = await postRepository.getListPost(startIndex, size, query, userId);
 		return res.status(201).json(listPosts);
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });

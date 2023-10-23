@@ -1,6 +1,7 @@
 import Comment from "../models/Comment.js";
 import Notification from "../models/Notification.js";
 import Post from "../models/Post.js";
+import Read from "../models/Read.js";
 import User from "../models/User.js";
 
 const create = async ({ content, userID, location }) => {
@@ -160,7 +161,7 @@ const getPostDetail = async (postID) => {
 	}
 };
 
-const getListPost = async (startIndex, size, query) => {
+const getListPost = async (startIndex, size, query, userId) => {
 	const listPost = await Post.find(query).skip(startIndex).limit(size).sort({ createdAt: -1 })
 		.populate({
 			path: "user",
@@ -184,8 +185,16 @@ const getListPost = async (startIndex, size, query) => {
 	if (!listPost || listPost.length <= 0) {
 		throw new Error("Don't have any post!");
 	}
+	const newListPost = listPost.map(async (post) => {
+		const read = await Read.find({ user: userId, post: post._id.toString() });
+		post.read = read.length > 0 ? true : false;
+		return post;
+	})
+	console.log(newListPost);
+	await Promise.all(newListPost);
+	console.log("2");
 	return {
-		data: listPost,
+		data: newListPost,
 		totalPost
 	};
 }

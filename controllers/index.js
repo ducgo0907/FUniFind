@@ -9,6 +9,7 @@ import followController from './follow.js'
 import locationController from './locations.js'
 import notificationController from './notification.js';
 import configController from './config.js';
+import readController from './read.js'
 
 
 export {
@@ -22,5 +23,6 @@ export {
 	followController,
 	locationController,
 	notificationController,
-	configController
+	configController,
+	readController
 }
