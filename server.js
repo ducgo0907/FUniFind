@@ -75,9 +75,13 @@ cloudinary.config({
 	secure: true,
 });
 
-cron.schedule('* * * * *', async () => {
-	console.log('running a task every minute');
+cron.schedule('0 0 8,10,14,20,0 * * 0-6', async () => {
+	console.log('running a task on 8:00, 10:00, 14:00, 20:00, 00:00 from monday to sunday');
+	// Check post new or not
 	await checkPostNew();
+}, {
+	scheduled: true,
+	timeZone: 'Asia/Ho_Chi_Minh'
 });
 
 // Listen at port
