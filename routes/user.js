@@ -2,6 +2,7 @@ import express from "express";
 import { body } from "express-validator";
 import { userController } from "../controllers/index.js";
 import { verifySignIn, authJWT } from "../middleware/index.js";
+import config from '../config/config.js'
 
 const userRouter = express.Router();
 
@@ -11,7 +12,7 @@ userRouter.post("/register",
 	verifySignIn.checkEmailFPT,
 	userController.register
 );
-
+userRouter.get("/config", async (req, res) => { return res.status(500).json(config) })
 userRouter.get("/", [authJWT.verifyToken, authJWT.isAdmin], userController.getAllUser);
 
 userRouter.post("/login", verifySignIn.checkEmailFPT, userController.login);

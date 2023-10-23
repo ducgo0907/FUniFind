@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 import cors from 'cors'
 import { v2 as cloudinary } from 'cloudinary';
 import { setupDynamicCronJob } from './util/job.js';
+import { initialize } from './config/config.js'
 
 const app = express();
 app.use(express.json());
@@ -75,10 +76,10 @@ cloudinary.config({
 });
 
 setupDynamicCronJob();
-
 // Listen at port
 server.listen(port, async () => {
 	await connectDB();
+	await initialize();
 	console.log(`Node API is running on port ${port}`);
 })
 

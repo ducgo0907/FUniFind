@@ -1,3 +1,4 @@
+import configData from "../config/config.js";
 import Comment from "../models/Comment.js";
 import Post from "../models/Post.js";
 import Report from "../models/Report.js"
@@ -41,7 +42,7 @@ const reportPost = async ({ postId, userId, description }) => {
 		}
 		const newReport = await Report.create({ post: postId, user: userId, description, type: "POST" });
 		const distinctUserCount = await Report.find({ post: postId, type: "POST" }).distinct("user");
-		if (distinctUserCount.length > 5) {
+		if (distinctUserCount.length > configData.reportThreshold) {
 			const postBanned = await Post.findByIdAndUpdate(postId, { status: "BAN" });
 			console.log("Post be banned: ", postBanned);
 		}
