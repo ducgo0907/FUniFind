@@ -6,8 +6,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors'
 import { v2 as cloudinary } from 'cloudinary';
-import cron from 'node-cron';
-import { checkPostNew } from './util/updatePost.js';
+import { setupDynamicCronJob } from './util/job.js';
 
 const app = express();
 app.use(express.json());
@@ -75,14 +74,7 @@ cloudinary.config({
 	secure: true,
 });
 
-cron.schedule('0 0 8,10,14,20,0 * * 0-6', async () => {
-	console.log('running a task on 8:00, 10:00, 14:00, 20:00, 00:00 from monday to sunday');
-	// Check post new or not
-	await checkPostNew();
-}, {
-	scheduled: true,
-	timeZone: 'Asia/Ho_Chi_Minh'
-});
+setupDynamicCronJob();
 
 // Listen at port
 server.listen(port, async () => {

@@ -1,8 +1,9 @@
 import mongoose, { ObjectId, Schema } from "mongoose";
 
-const FPTAdress = mongoose.model("FPTAdress", new Schema(
+const Schedule = mongoose.model("Schedule", new Schema(
 	{
-		address: {
+		id: ObjectId,
+		cronExpression: {
 			type: String,
 			require: true
 		}
@@ -12,4 +13,5 @@ const FPTAdress = mongoose.model("FPTAdress", new Schema(
 	}
 ))
 
-export default FPTAdress;
+export default Schedule;
+
