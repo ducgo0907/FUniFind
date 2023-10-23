@@ -60,6 +60,9 @@ const login = async ({ email, password }) => {
 		if (!passwordIsValid) {
 			throw new Error('Password invalid');
 		}
+		if(!loginUser.isActive){
+			throw new Error("User is not active");
+		}
 		const jwtSecret = process.env.SECRET_KEY_JWT;
 		const token = jwt.sign({ id: loginUser._id, name: loginUser.name, email: loginUser.email, isActive: loginUser.isActive }, jwtSecret, {
 			algorithm: 'HS256',
