@@ -24,9 +24,8 @@ const reportComment = async ({ commentId, userId, description }) => {
 		const newReport = await Report.create({ comment: commentId, user: userId, description, type: "COMMENT" });
 		const distinctUserCount = await Report.find({ comment: commentId, type: "COMMENT" }).distinct("user");
 		console.log(distinctUserCount.length);
-		if (distinctUserCount.length > 5) {
+		if (distinctUserCount.length > configData.reportThreshold) {
 			const commentBanned = await Comment.findByIdAndUpdate(commentId, { status: "BAN" });
-			console.log("Comment be banned: ", commentBanned);
 		}
 		return newReport;
 	} catch (error) {
@@ -42,9 +41,8 @@ const reportPost = async ({ postId, userId, description }) => {
 		}
 		const newReport = await Report.create({ post: postId, user: userId, description, type: "POST" });
 		const distinctUserCount = await Report.find({ post: postId, type: "POST" }).distinct("user");
-		if (distinctUserCount.length > configData.reportThreshold) {
+		if (distinctUserCount.length >= configData.reportThreshold) {
 			const postBanned = await Post.findByIdAndUpdate(postId, { status: "BAN" });
-			console.log("Post be banned: ", postBanned);
 		}
 		return newReport;
 	} catch (error) {
