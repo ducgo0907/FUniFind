@@ -180,19 +180,18 @@ const getListPost = async (startIndex, size, query, userId) => {
 		.populate({
 			path: "images"
 		})
+		.lean()
 	const totalPost = await Post.countDocuments(query);
 
 	if (!listPost || listPost.length <= 0) {
 		throw new Error("Don't have any post!");
 	}
-	const newListPost = listPost.map(async (post) => {
+	const newListPost = await Promise.all(listPost.map(async (post) => {
 		const read = await Read.find({ user: userId, post: post._id.toString() });
 		post.read = read.length > 0 ? true : false;
 		return post;
-	})
-	console.log(newListPost);
-	await Promise.all(newListPost);
-	console.log("2");
+	}))
+
 	return {
 		data: newListPost,
 		totalPost
