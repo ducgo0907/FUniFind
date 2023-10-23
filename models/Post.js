@@ -45,6 +45,10 @@ const Post = mongoose.model("Post", new Schema(
 		refuseReason: {
 			type: String,
 			require: false
+		},
+		new: {
+			type: Boolean,
+			default: true
 		}
 	},
 	{

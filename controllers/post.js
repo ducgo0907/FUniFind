@@ -16,7 +16,7 @@ const create = async (req, res) => {
 	const userID = req.userID;
 	try {
 		// Call action cua Repository (DAO)
-		const newPost = await postRepository.create({ content, userID, location });
+		const newPost = await postRepository.create({ content, userID, location, isNew: true });
 		return res.status(201).json({
 			message: "Create post successfully",
 			data: newPost,
@@ -122,7 +122,6 @@ const upload = async (req, res) => {
 			folder: "/test",
 		};
 		const { postId } = fields;
-		console.log(postId);
 		const filesData = fields.file;
 		for (let i = 0; i < filesData.length; i++) {
 			const imagePath = filesData[i];

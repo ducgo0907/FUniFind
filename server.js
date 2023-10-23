@@ -6,6 +6,8 @@ import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors'
 import { v2 as cloudinary } from 'cloudinary';
+import cron from 'node-cron';
+import { checkPostNew } from './util/updatePost.js';
 
 const app = express();
 app.use(express.json());
@@ -71,6 +73,11 @@ cloudinary.config({
 	api_key: process.env.API_KEY,
 	api_secret: process.env.API_SECRET,
 	secure: true,
+});
+
+cron.schedule('* * * * *', async () => {
+	console.log('running a task every minute');
+	await checkPostNew();
 });
 
 // Listen at port
