@@ -13,8 +13,8 @@ const getNotification = async (startIndex, size, query) => {
 	};
 }
 
-const createNotification = async (content, userId) => {
-	const newNoti = await Notification.create({content, user: userId});
+const createNotification = async (content, userId, uri) => {
+	const newNoti = await Notification.create({ content, user: userId, uri });
 	return newNoti;
 }
 

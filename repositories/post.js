@@ -108,7 +108,7 @@ const getListPending = async (startIndex, size, query) => {
 	}
 };
 
-const approve = async ({ postID, isApprove }) => {
+const approve = async ({ postID, isApprove, refuseReason }) => {
 	try {
 		const post = await Post.findById(postID)
 			.populate({
@@ -121,9 +121,13 @@ const approve = async ({ postID, isApprove }) => {
 		const status = isApprove ? "APPROVED" : "REJECTED";
 		post.status = status;
 		post.approvedAt = new Date();
+		if (!isApprove) {
+			post.refuseReason = refuseReason;
+		}
 		await post.save();
-		const notification = `Admin ${status} your post!`;
-		await Notification.create({ user: post.user._id, content: notification });
+		// // Create a notification for post is approve or reject
+		// const notification = `Admin ${status} your post! ${isApprove ? '' : 'Because ' + refuseReason}`;
+		// await Notification.create({ user: post.user._id, content: notification, uri: `/posts/${post._id}` });
 		return post;
 	} catch (error) {
 		throw new Error(error);
@@ -154,7 +158,6 @@ const getPostDetail = async (postID) => {
 };
 
 const getListPost = async (startIndex, size, query) => {
-	console.log(startIndex, size, query);
 	const listPost = await Post.find(query).skip(startIndex).limit(size).sort({ createdAt: -1 })
 		.populate({
 			path: "user",
@@ -188,7 +191,6 @@ const banPost = async ({ postID, userID }) => {
 	try {
 		const post = await Post.findById(postID);
 		const user = await User.findById(userID);
-		console.log(postID, user);
 		if (!post) {
 			throw new Error("Post is not existed!!");
 		}
@@ -207,7 +209,6 @@ const unBanPost = async ({ postID, userID }) => {
 	try {
 		const post = await Post.findById(postID);
 		const user = await User.findById(userID);
-		console.log(postID, user);
 		if (!post) {
 			throw new Error("Post is not existed!!");
 		}

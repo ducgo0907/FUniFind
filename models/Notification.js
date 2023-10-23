@@ -11,6 +11,10 @@ const Notification = mongoose.model("Notification", new Schema(
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
+		},
+		uri: {
+			type: String,
+			require: false
 		}
 	},
 	{

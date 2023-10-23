@@ -65,9 +65,9 @@ const getAllPosts = async (req, res) => {
 };
 
 const approve = async (req, res) => {
-	const { postID, isApprove } = req.body;
+	const { postID, isApprove, refuseReason } = req.body;
 	try {
-		const postAction = await postRepository.approve({ postID, isApprove });
+		const postAction = await postRepository.approve({ postID, isApprove, refuseReason });
 		return res.status(200).json({
 			message: "Action successfully!",
 			data: postAction,

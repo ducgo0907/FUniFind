@@ -15,10 +15,10 @@ const getNotification = async (req, res) => {
 }
 
 const createNotification = async (req, res) => {
-	const { content } = req.body;
+	const { content, uri } = req.body;
 	const userId = req.userID;
 	try {
-		const notification = await notificationRepository.createNotification(content, userId);
+		const notification = await notificationRepository.createNotification(content, userId, uri);
 		return res.status(201).json(notification);
 	} catch (error) {
 		return res.status(500).json({ message: error.toString() });

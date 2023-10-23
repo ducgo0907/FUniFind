@@ -41,6 +41,10 @@ const Post = mongoose.model("Post", new Schema(
 		approvedAt: {
 			type: Date,
 			require: false
+		},
+		refuseReason: {
+			type: String,
+			require: false
 		}
 	},
 	{
