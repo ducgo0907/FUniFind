@@ -16,14 +16,14 @@ const server = http.createServer(app);
 // Create socket for realtime chat and comment
 const socketIO = new Server(server, {
 	cors: {
-		origin: 'http://localhost:3000',
+		origin: ['http://localhost:3000', 'https://funifind.netlify.app'],
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 		credentials: true, // Enable credentials (important for cookies and authentication)
 	},
 });
 
 app.use(cors({
-	origin: 'http://localhost:3000', // Replace with the origin of your frontend
+	origin: ['http://localhost:3000', 'https://funifind.netlify.app'], // Replace with the origin of your frontend
 	methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 	credentials: true, // Enable credentials (if needed)
 }))
