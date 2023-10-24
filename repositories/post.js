@@ -135,9 +135,9 @@ const approve = async ({ postID, isApprove, refuseReason }) => {
 	}
 };
 
-const getPostDetail = async (postID) => {
+const getPostDetail = async (postID, userId) => {
 	try {
-		return await Post.find({ _id: postID })
+		const postDetail = await Post.findById({ _id: postID })
 			.populate({
 				path: "user",
 				select: "name",
@@ -155,7 +155,11 @@ const getPostDetail = async (postID) => {
 			.populate({
 				path: "location"
 			})
-			.exec();
+			.lean();
+
+		const read = await Read.find({ user: userId, post: postID });
+		postDetail.read = read.length > 0 ? true : false;
+		return postDetail;
 	} catch (error) {
 		throw new Error(error);
 	}

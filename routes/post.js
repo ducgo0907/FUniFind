@@ -49,7 +49,7 @@ postRouter.get("/listBan",
 
 postRouter.get(
 	"/:id",
-	// [authJWT.verifyToken, authJWT.isAdmin],
+	[authJWT.verifyToken],
 	postController.getPostDetails
 );
 

@@ -98,8 +98,9 @@ const getListPending = async (req, res) => {
 
 const getPostDetails = async (req, res) => {
 	const { id } = req.params;
+	const userId = req.userID;
 	try {
-		const postDetail = await postRepository.getPostDetail(id);
+		const postDetail = await postRepository.getPostDetail(id, userId);
 		return res.status(200).json({
 			message: "Get detail post successfully",
 			data: postDetail,
