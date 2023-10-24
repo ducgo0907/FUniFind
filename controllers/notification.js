@@ -15,8 +15,7 @@ const getNotification = async (req, res) => {
 }
 
 const createNotification = async (req, res) => {
-	const { content, uri } = req.body;
-	const userId = req.userID;
+	const { content, uri, userId } = req.body;
 	try {
 		const notification = await notificationRepository.createNotification(content, userId, uri);
 		return res.status(201).json(notification);
