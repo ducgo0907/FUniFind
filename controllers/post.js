@@ -97,8 +97,7 @@ const getListPending = async (req, res) => {
 };
 
 const getPostDetails = async (req, res) => {
-	const { id } = req.params;
-	const userId = req.userID;
+	const { id, userId } = req.params;
 	try {
 		const postDetail = await postRepository.getPostDetail(id, userId);
 		return res.status(200).json({
