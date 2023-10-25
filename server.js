@@ -75,11 +75,11 @@ cloudinary.config({
 	secure: true,
 });
 
-setupDynamicCronJob();
 // Listen at port
 server.listen(port, async () => {
 	await connectDB();
 	await initialize();
+	await setupDynamicCronJob();
 	console.log(`Node API is running on port ${port}`);
 })
 
