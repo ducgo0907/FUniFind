@@ -97,7 +97,9 @@ const getListPending = async (req, res) => {
 };
 
 const getPostDetails = async (req, res) => {
-	const { id, userId } = req.params;
+	const { id } = req.params;
+	const { userId } = req.query;
+	
 	try {
 		const postDetail = await postRepository.getPostDetail(id, userId);
 		return res.status(200).json({
@@ -150,7 +152,7 @@ const getListPost = async (req, res) => {
 		content: { $regex: searchString, $options: 'i' },
 	};
 	query.status = "APPROVED"
-	if(location !== ''){
+	if (location !== '') {
 		query.location = location;
 	}
 	const startIndex = (page - 1) * size;
@@ -193,7 +195,7 @@ const getListPostBan = async (req, res) => {
 		content: { $regex: searchString, $options: 'i' },
 	};
 	query.status = "BAN";
-	if(location !== ''){
+	if (location !== '') {
 		query.location = location;
 	}
 	const startIndex = (page - 1) * size;
@@ -201,7 +203,7 @@ const getListPostBan = async (req, res) => {
 		const listPosts = await postRepository.getListPost(startIndex, size, query);
 		return res.status(201).json(listPosts);
 	} catch (error) {
-		return res.status(500).json({ message: error.toString()});
+		return res.status(500).json({ message: error.toString() });
 	}
 }
 

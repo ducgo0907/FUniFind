@@ -156,7 +156,7 @@ const getPostDetail = async (postID, userId) => {
 				path: "location"
 			})
 			.lean();
-
+			console.log(postID, userId);
 		const read = await Read.find({ user: userId, post: postID });
 		postDetail.read = read.length > 0 ? true : false;
 		return postDetail;
