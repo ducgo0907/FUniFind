@@ -150,6 +150,9 @@ const getPostDetail = async (postID, userId) => {
 				},
 			})
 			.populate({
+				path: "interactions"
+			})
+			.populate({
 				path: "images"
 			})
 			.populate({
@@ -177,6 +180,9 @@ const getListPost = async (startIndex, size, query, userId) => {
 				path: "user",
 				select: "_id name",
 			},
+		})
+		.populate({
+			path: "interactions"
 		})
 		.populate({
 			path: "location"
