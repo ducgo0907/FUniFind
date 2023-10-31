@@ -4,7 +4,7 @@ import User from "../models/User.js";
 const getAllMessage = async (receiver, sender, userId) => {
 	const user = await User.findOne({ email: sender });
 	if (user._id.toString() !== userId) {
-		return {message: "You don't have access to this messages"};
+		return { message: "You don't have access to this messages" };
 	}
 	const listAllMessage = await Message.find({
 		$or: [{ sender: sender, receiver: receiver }, { sender: receiver, receiver: sender }]
@@ -21,7 +21,17 @@ const saveMessage = async ({ sender, receiver, message }) => {
 	return newMessage;
 }
 
+const getListReceiver = async (sender) => {
+	try {
+		const listReceiver = await Message.distinct('receiver', { sender });
+		return listReceiver;
+	}catch(error){
+		throw new Error(error.toString())
+	}
+}
+
 export default {
 	getAllMessage,
-	saveMessage
+	saveMessage,
+	getListReceiver
 }

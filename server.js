@@ -39,7 +39,6 @@ app.use(router);
 const connectedUsers = {};
 
 socketIO.on('connection', (socket) => {
-	console.log("User connected,: ", socket.id);
 	socket.on('storeUserId', (userId) => {
 		connectedUsers[userId] = socket.id;
 	})
@@ -52,10 +51,10 @@ socketIO.on('connection', (socket) => {
 		socketIO.emit('deletedComment', { commentId, postId });
 	})
 
-	socket.on('privateMessage', ({ sender, receiver, message, userName }) => {
+	socket.on('privateMessage', ({ sender, receiver, message }) => {
 		let receiverSocketId = connectedUsers[receiver];
 		if (receiverSocketId) {
-			socketIO.to(receiverSocketId).emit('privateMessage', { sender, message, userName });
+			socketIO.to(receiverSocketId).emit('privateMessage', { sender, receiver, message });
 		}
 	})
 

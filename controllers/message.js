@@ -1,3 +1,4 @@
+import { response } from "express";
 import { messageRepository } from "../repositories/index.js";
 
 const saveMessage = async (req, res) => {
@@ -27,7 +28,18 @@ const getAllMessage = async (req, res) => {
 	}
 }
 
+const getListReceiver = async (req, res) => {
+	const { sender } = req.query;
+	try {
+		const listReceiver = await messageRepository.getListReceiver(sender);
+		return res.status(200).json({ listReceiver });
+	} catch (error) {
+		return res.status(500).json({ error });
+	}
+}
+
 export default {
 	saveMessage,
-	getAllMessage
+	getAllMessage,
+	getListReceiver
 }

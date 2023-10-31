@@ -5,6 +5,7 @@ import { authJWT, verifySignIn} from '../middleware/index.js'
 const messageRouter = express.Router();
 
 messageRouter.get('/all', [authJWT.verifyToken],messageController.getAllMessage);
+messageRouter.get('/listReceiver', [authJWT.verifyToken], messageController.getListReceiver);
 messageRouter.post('/save', [authJWT.verifyToken, verifySignIn.checkEmailFPTMessage], messageController.saveMessage);
 
 export default messageRouter;
