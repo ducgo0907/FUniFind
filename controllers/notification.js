@@ -24,7 +24,18 @@ const createNotification = async (req, res) => {
 	}
 }
 
+const read = async (req, res) => {
+	const { notificationId } = req.body;
+	try{
+		const notification = await notificationRepository.read(notificationId);
+		return res.status(201).json({message: "read"});
+	}catch(error) {
+		return res.status(500).json({ message: error.toString() });
+	}
+}
+
 export default {
 	getNotification,
-	createNotification
+	createNotification,
+	read
 }

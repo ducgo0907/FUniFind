@@ -18,7 +18,14 @@ const createNotification = async (content, userId, uri) => {
 	return newNoti;
 }
 
+const read = async (notificationId) => {
+	const notification = await Notification.findById(notificationId);
+	notification.read = true;
+	return notification.save();
+}
+
 export default {
 	getNotification,
-	createNotification
+	createNotification,
+	read
 };

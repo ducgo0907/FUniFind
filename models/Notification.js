@@ -15,6 +15,11 @@ const Notification = mongoose.model("Notification", new Schema(
 		uri: {
 			type: String,
 			require: false
+		},
+		read: {
+			type: Boolean,
+			require: true,
+			default: false
 		}
 	},
 	{
