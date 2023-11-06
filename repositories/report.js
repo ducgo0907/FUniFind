@@ -21,6 +21,10 @@ const reportComment = async ({ commentId, userId, description }) => {
 		if (comment.status === 'BAN') {
 			throw new Error('Comment already Banned');
 		}
+		const existedReport = await Report.find({comment: commentId, user:userId});
+		if(!existedReport){
+			throw new Error('User already reported');
+		}
 		const newReport = await Report.create({ comment: commentId, user: userId, description, type: "COMMENT" });
 		const distinctUserCount = await Report.find({ comment: commentId, type: "COMMENT" }).distinct("user");
 		console.log(distinctUserCount.length);
@@ -38,6 +42,10 @@ const reportPost = async ({ postId, userId, description }) => {
 		const post = await Post.findById(postId);
 		if (post.status === 'BAN') {
 			throw new Error('Post is already banned');
+		}
+		const existedReport = await Report.find({post: postId, user:userId});
+		if(!existedReport){
+			throw new Error('User already reported');
 		}
 		const newReport = await Report.create({ post: postId, user: userId, description, type: "POST" });
 		const distinctUserCount = await Report.find({ post: postId, type: "POST" }).distinct("user");
