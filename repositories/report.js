@@ -21,7 +21,7 @@ const reportComment = async ({ commentId, userId, description }) => {
 		if (comment.status === 'BAN') {
 			throw new Error('Comment already Banned');
 		}
-		const existedReport = await Report.find({comment: commentId, user:userId});
+		const existedReport = await Report.find({comment: commentId, user: userId});
 		if(!existedReport){
 			throw new Error('User already reported');
 		}

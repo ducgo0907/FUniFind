@@ -40,6 +40,7 @@ const connectedUsers = {};
 
 socketIO.on('connection', (socket) => {
 	socket.on('storeUserId', (userId) => {
+		console.log("storeUserId: ", userId);
 		connectedUsers[userId] = socket.id;
 	})
 
@@ -53,9 +54,16 @@ socketIO.on('connection', (socket) => {
 
 	socket.on('privateMessage', ({ sender, receiver, message }) => {
 		let receiverSocketId = connectedUsers[receiver];
-		console.log(message, "123");
 		if (receiverSocketId) {
 			socketIO.to(receiverSocketId).emit('privateMessage', { sender, receiver, message });
+		}
+	})
+
+	socket.on('notification', ({message, userId}) => {
+		console.log("Get Notification");
+		let receiverSocketId = connectedUsers[userId];
+		if (receiverSocketId) {
+			socketIO.to(receiverSocketId).emit('notification', { message });
 		}
 	})
 
